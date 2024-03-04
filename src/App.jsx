@@ -1,9 +1,12 @@
 import {calculateInvestmentResults} from './util/investment'
 
-const result = calculateInvestmentResults({initialInvestment:1,annualInvestment:100,expectedReturn:10,duration:2})
+const result = calculateInvestmentResults({initialInvestment:15000,annualInvestment:900,expectedReturn:6,duration:10})
 const handleClick = () => {
   console.log(result)
+  console.log(result1)
 }
+const result1 = result.map(item => item.interest)
+
 function App() {
   return (
     <>
@@ -17,6 +20,31 @@ function App() {
       <div className="box box4">Duration <br/><input type="number"/></div>
     </div>
     <button onClick={handleClick}>TEST</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Year</th>
+        <th>Investment Value</th>
+        <th>Interest (Year)</th>
+        <th>Total Interest</th>
+        <th>Invested Capital</th>
+      </tr>
+    </thead>
+    {result.map((item,key) => {
+      return (
+      <tbody key={key}>
+        <tr>
+          <td>{key}</td>
+          <td>{item.valueEndOfYear}</td>
+          <td>{item.interest}</td>
+          <td>{result1.slice(0,key+1).reduce((accumulator,currentValue)=>{return accumulator + currentValue},0)}</td>
+          <td>{item.annualInvestment}</td>
+        </tr>
+      </tbody>
+      );
+    })}
+</table>
     </>
   );
 }
